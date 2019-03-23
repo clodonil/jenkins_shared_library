@@ -1,0 +1,19 @@
+version: '3'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - 8080:8080
+    links:
+      - gitlab
+    volumes:
+      - 'jenkins_data:/jenkins_config'
+  
+  gitlab:
+    image: gitlab/gitlab-ce
+    ports:
+      - 80:80
+
+volumes:
+  jenkins_data:
+    driver: local
