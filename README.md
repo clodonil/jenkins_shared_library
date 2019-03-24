@@ -33,17 +33,18 @@ $ docker logs jenkins_shared_library_jenkins_1
 
 
 *************************************************************
-*************************************************************
-*************************************************************
-
-Jenkins initial setup is required. An admin user has been created and a password generated.
-Please use the following password to proceed to installation:
 
 ce83575d55d2418fafc98f86f1151cdb
 
 This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
 
 *************************************************************
-*************************************************************
-*************************************************************
 ```
+
+As outras configurações necessárias é apenas a criação do usuário também do `jenkins` e do `gitlab`.
+
+![img1](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/img2.png)
+
+Agora temos o `jenkins` e o `gitlab` configurado corretamente.
+
+## shared library
