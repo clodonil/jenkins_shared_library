@@ -18,7 +18,7 @@ $ docker-compose up
 
 ## Configuração do Jenkins e Gitlab
 
-Como as imagens em execução, podemos acessar também o `jenkins` pela url `http://localhost:8080` e o `gitab` pela url `http://localhost`.
+Como as imagens em execução, podemos acessar o `jenkins` pela url `http://localhost:8080` e o `gitab` pela url `http://localhost`.
 
 Na configuração do jenkins, é necessário recuperar o token que está no diretório `/var/jenkins_home/secrets/initialAdminPassword` para seguir a instalação.
 
@@ -41,10 +41,10 @@ This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
 *************************************************************
 ```
 
-As outras configurações necessárias é apenas a criação do usuário também do `jenkins` e do `gitlab`.
+As outras configurações necessárias é apenas a criação do usuário no `jenkins` e no `gitlab`.
 
 ![img1](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/img2.png)
 
 Agora temos o `jenkins` e o `gitlab` configurado corretamente.
 
-## shared library
+## shared library 
