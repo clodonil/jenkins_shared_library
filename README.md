@@ -16,13 +16,15 @@ No diretório do projeto, suba os container utilizar o [`docker-compose`](https:
 $ docker-compose up
 ```
 
+## Configuração do Jenkins e Gitlab
+
 Como as imagens em execução, podemos acessar também o `jenkins` pela url `http://localhost:8080` e o `gitab` pela url `http://localhost`.
 
 Na configuração do jenkins, é necessário recuperar o token que está no diretório `/var/jenkins_home/secrets/initialAdminPassword` para seguir a instalação.
 
 Esse processo pode ser feito conectando diretamente no container como mostra a imagem a seguir.
 
-![img1](https://github.com/clodonil/jenkins_shared_library/imgs/img1.png)
+![img1](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/img1.png)
 
 Também é possível listar os logs do container para obter esse token. Veja qual o processo que fica mais fácil para você.
 
