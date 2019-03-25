@@ -10,7 +10,7 @@
   <name>Jetty HelloWorld</name>
  
   <properties>
-    <jettyVersion>9.2.9.v20150224</jettyVersion>
+    <jettyVersion>9.3.24.v20180605</jettyVersion>
   </properties>
  
   <dependencies>
