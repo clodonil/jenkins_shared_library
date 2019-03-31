@@ -72,12 +72,15 @@ Vamos utilizar como base a pipeline abaixo. Ela tem 5 stages.
 - **Build**: Compila o código fonte para gerar os artefatos; 
 - **Publish**: Publica os artefatos em um repositório;
 
-Vamos escrever 
+Vamos escrever a [pipeline](https://github.com/clodonil/jenkins_shared_library/blob/master/pipeline/jenkinsfile.groovy) em `groovy`. 
 
-[jenkins](https://github.com/clodonil/jenkins_shared_library/blob/master/pipeline/jenkinsfile.groovy)
+> Conheça mais sobre [Groovy](http://groovy-lang.org/learn.html)
 
+Em cada stage foi criado as seguintes chamadas [`variable`,`checkout`,`testunit`, `security`, `qa`,  `build`, `publish`] que serão funções importadas de um branch do git.
 
-```
+crie no jenkins um projeto (`job`) do tipo pipeline e utilize o código abaixo.
+
+```python
 pipeline {
   agent any
   environment {
@@ -101,7 +104,7 @@ pipeline {
     stage('Analysis Sec') { 
       steps {
         // Stage para analise de segurança do código 
-        secutiry
+        security
       }
     }
     stage('Analysis QA') { 
