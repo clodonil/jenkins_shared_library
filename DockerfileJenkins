@@ -1,0 +1,9 @@
+FROM jenkins/jenkins:lts
+
+USER: root
+
+mkdir /opt/maven
+wget http://ftp.unicamp.br/pub/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz -C /opt/maven/ --strip-components=1
+tar -xzvf apache-maven-3.6.0-bin.tar.gz
+mv apache-maven-3.6.0 /opt/maven1.
+ln -s /opt/maven/bin/mvn /usr/bin/mvn1

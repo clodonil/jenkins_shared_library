@@ -6,11 +6,11 @@ Em ambientes com muitos pipelines para projetos diferentes tornam a manutenção
 
 Copiar e colar partes de uma pipelines como forma de reutilizar código em diferentes `Jenkins` pode rapidamente se tornar uma dor de cabeça de manutenção.
 
-Então, para evitar isso, você armazena seus "códigos de stage" em uma biblioteca compartilhada (`shared library`) no `Jenkins`. Você só precisa escrever o código uma vez e, em seguida, pode referenciar o mesmo código em todos os seus pipelines.
+Então, para evitar isso, você armazena seus "código de stage" em uma biblioteca compartilhada (`shared library`) no `Jenkins`. Você só precisa escrever o código uma vez e em seguida, pode referenciar o mesmo código em todos os seus pipelines.
 
-Dessa forma, melhorias aplicadas em um `stage` são automaticamente replicas para todos os pipelines que tem esse `stage` referenciado.
+Dessa forma, melhorias aplicadas em um `stage` são automaticamente replicadas para todos os pipelines que tem esse `stage` referenciado.
 
-Nesse tutorial vamos estudar sobre o `shared library` na prática e para isso vamos precisar e uma infra-estrutura com `jenkins` e `gitlab`. Também vamos precisar de um AppDemo para usar na nossa pipeline e por último vamos criar a nossa pipeline com `shared library`.
+Nesse tutorial vamos estudar sobre o `shared library` na prática e para isso vamos precisar de uma infra-estrutura com `jenkins` e `gitlab`. Também vamos precisar de um AppDemo para usar na nossa pipeline e por último vamos criar a nossa pipeline com `shared library`.
 
 ## Infra-estrutura necessária
 
@@ -18,12 +18,10 @@ Vamos começar esse tutorial de `Jenkins Shared Library` construindo a infra nec
 
 O [`docker-compose.yml`](https://github.com/clodonil/jenkins_shared_library/blob/master/docker-compose.yml) que faz a declaração das imagens do `jenkins` e do `gitlab`.
 
-
 Para começar faça o clone do projeto do git.
 ```bash
 $ git clone https://github.com/clodonil/jenkins_shared_library.git
 ```
-
 No diretório do projeto, suba os container utilizar o [`docker-compose`](https://docs.docker.com/compose/install/).
 
 ```bash
@@ -61,9 +59,79 @@ As outras configurações necessárias é apenas a criação do usuário no `jen
 
 Agora temos o `jenkins` e o `gitlab` configurado corretamente.
 
-## Pipeline Padrão
+## Template de Pipeline 
+
+Vamos utilizar como base a pipeline abaixo. Ela tem 5 stages.
+
+![img1](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/pipeline.png)
+
+- **Checkout**: Realiza o clone do código fonte;
+- **TestUnit**: Roda o teste unitário;
+- **Analysis Sec**: Realiza análise de segurança do código;  
+- **Analysis QA**: Realiza análise de qualidade do código;
+- **Build**: Compila o código fonte para gerar os artefatos; 
+- **Publish**: Publica os artefatos em um repositório;
+
+
+```java
+pipeline {
+  agent any
+  environment {
+          //Variaveis
+  }
+  stages {
+    stage('Checkout') { 
+      steps {
+          // Stage de clone do projeto
+      }
+    }  
+    stage('TestUnit') { 
+      steps {
+        // Stage para executar test unit 
+      }
+    }
+
+    stage('Analysis Sec') { 
+      steps {
+        // Stage para analise de segurança do código 
+      }
+    }
+    stage('Analysis QA') { 
+      steps {
+        // Stage para analise de qualidade do código
+      }
+    }
+    stage('Build') { 
+      steps {
+        // Build do código
+      }
+    }
+    stage('Publish') { 
+      steps {
+        // Publicar o build em repositório 
+      }
+    }
+  }
+}
+
+```
+
+Branch
 
 
 ## Shared Library
 
+Primeira ordem de trabalhos: criar um repositório jenkins-shared-library (como muitos, eu uso o Github, mas qualquer que seja o SCM que você esteja usando para o Jenkins, tudo bem). Ele não precisa ser chamado assim, e não precisa ter nada nele ainda, mas você precisará adicionar esse repositório ao Jenkins, em Gerenciar bibliotecas globais de pipeline do Jenkins »Configure System» . Você precisará de acesso administrativo a Jenkins ou terá que levar as pessoas a bordo. Como há um possível risco de segurança (qualquer um que possa se comprometer com esse repositório pode enviar o código para ser executado no seu Jenkins), um repositório privado é o melhor.
 
+Escolher 'Carregar implicitamente' significa que você não precisa usar a tag @Library em seus pipelines para acessar sua biblioteca, mas também significa que sua biblioteca será carregada em cada pipeline, quer você queira ou não (você pode ver o SCM checkout e last commit de sua biblioteca compartilhada para o início de seu pipeline).
+
+A opção "Permitir que a versão padrão seja sobrescrita" é útil - permite especificar uma ramificação (ou identificador ou outro identificador) diferente dos padrões para que você possa experimentar as alterações em um único local antes de pressioná-los em tudo, o que é importante quando Qualquer alteração feita na biblioteca tem a chance de afetar todos os canais que a usam.
+
+### Criando a repo Shared
+
+
+
+
+http://www.aimtheory.com/jenkins/pipeline/continuous-delivery/2017/12/02/jenkins-pipeline-global-shared-library-best-practices.html
+
+https://github.com/fabric8io/fabric8-pipeline-library
