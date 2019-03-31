@@ -78,7 +78,7 @@ Vamos escrever a [pipeline](https://github.com/clodonil/jenkins_shared_library/b
 
 Em cada stage foi criado as seguintes chamadas [`variable`,`checkout`,`testunit`, `security`, `qa`,  `build`, `publish`] que serão funções importadas de um branch do git.
 
-crie no jenkins um projeto (`job`) do tipo pipeline e utilize o código abaixo.
+Crie no jenkins um projeto (`job`) do tipo pipeline e utilize o código abaixo.
 
 ```python
 pipeline {
@@ -130,7 +130,7 @@ pipeline {
 
 ```
 
-Branch
+![branch](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/branch.png)
 
 
 ## Shared Library
