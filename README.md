@@ -63,8 +63,6 @@ Agora temos o `jenkins` e o `gitlab` configurado corretamente.
 
 Vamos utilizar como base a pipeline abaixo. Ela tem 5 stages.
 
-![img1](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/pipeline.png)
-
 - **Checkout**: Realiza o clone do código fonte;
 - **TestUnit**: Roda o teste unitário;
 - **Analysis Sec**: Realiza análise de segurança do código;  
@@ -130,8 +128,16 @@ pipeline {
 
 ```
 
+Antes de começar a escrever as funções da pipeline é necessário criar um ambiente para o desenvolvimento, teste e validação antes de colocar em produção.
+
+Estamos falando em escrever código, vamos utilizar o `gitlab` para realizar o controle do código. E vamos criar as branch de desenvolvimento e a branch de produção. Primeiramente o código é desenvolvido na branch de desenvolvimento e após os testes realizamos um `Merge Request` para a branch de produção.
+
+Dessa forma matemos os ambientes controlados e a evolução da esteira de Jenkins é feita como qualquer outro código.
+
 ![branch](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/branch.png)
 
+
+Primeira ordem de trabalhos: criar um repositório jenkins-shared-library (como muitos, eu uso o Github, mas qualquer que seja o SCM que você esteja usando para o Jenkins, tudo bem). Ele não precisa ser chamado assim, e não precisa ter nada nele ainda, mas você precisará adicionar esse repositório ao Jenkins, em Gerenciar bibliotecas globais de pipeline do Jenkins »Configure System» 
 
 ## Shared Library
 
