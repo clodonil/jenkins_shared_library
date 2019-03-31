@@ -130,16 +130,21 @@ pipeline {
 
 Antes de começar a escrever as funções da pipeline é necessário criar um ambiente para o desenvolvimento, teste e validação antes de colocar em produção.
 
-Estamos falando em escrever código, vamos utilizar o `gitlab` para realizar o controle do código. E vamos criar as branch de desenvolvimento e a branch de produção. Primeiramente o código é desenvolvido na branch de desenvolvimento e após os testes realizamos um `Merge Request` para a branch de produção.
+Estamos falando em escrever código, portanto vamos utilizar o `gitlab` para realizar o controle do código. E vamos criar as branch de desenvolvimento e a branch de produção. Primeiramente o código é desenvolvido na branch de desenvolvimento e após os testes, realizamos um `Merge Request` para a branch de produção.
 
 Dessa forma matemos os ambientes controlados e a evolução da esteira de Jenkins é feita como qualquer outro código.
 
 ![branch](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/branch.png)
 
+Portanto crie no `gitlab` um repositório (criei com o nome shared) e as duas branch. Os códigos de exemplo estão no diretório [shared](https://github.com/clodonil/jenkins_shared_library/tree/master/shared/), envie para a branch de desenvolvimento.
+
+
+## Shared Library
 
 Primeira ordem de trabalhos: criar um repositório jenkins-shared-library (como muitos, eu uso o Github, mas qualquer que seja o SCM que você esteja usando para o Jenkins, tudo bem). Ele não precisa ser chamado assim, e não precisa ter nada nele ainda, mas você precisará adicionar esse repositório ao Jenkins, em Gerenciar bibliotecas globais de pipeline do Jenkins »Configure System» 
 
-## Shared Library
+![jenkins](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/jenkins-shared.png)
+
 
 Primeira ordem de trabalhos: criar um repositório jenkins-shared-library (como muitos, eu uso o Github, mas qualquer que seja o SCM que você esteja usando para o Jenkins, tudo bem). Ele não precisa ser chamado assim, e não precisa ter nada nele ainda, mas você precisará adicionar esse repositório ao Jenkins, em Gerenciar bibliotecas globais de pipeline do Jenkins »Configure System» . Você precisará de acesso administrativo a Jenkins ou terá que levar as pessoas a bordo. Como há um possível risco de segurança (qualquer um que possa se comprometer com esse repositório pode enviar o código para ser executado no seu Jenkins), um repositório privado é o melhor.
 
