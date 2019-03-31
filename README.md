@@ -72,12 +72,12 @@ Vamos utilizar como base a pipeline abaixo. Ela tem 5 stages.
 - **Build**: Compila o código fonte para gerar os artefatos; 
 - **Publish**: Publica os artefatos em um repositório;
 
-Escrevendo ess
+Vamos escrever 
 
 [jenkins](https://github.com/clodonil/jenkins_shared_library/blob/master/pipeline/jenkinsfile.groovy)
 
 
-```groovy
+```
 pipeline {
   agent any
   environment {
