@@ -72,43 +72,54 @@ Vamos utilizar como base a pipeline abaixo. Ela tem 5 stages.
 - **Build**: Compila o código fonte para gerar os artefatos; 
 - **Publish**: Publica os artefatos em um repositório;
 
+Escrevendo ess
 
-```java
+[jenkins](https://github.com/clodonil/jenkins_shared_library/blob/master/pipeline/jenkinsfile.groovy)
+
+
+```groovy
 pipeline {
   agent any
   environment {
-          //Variaveis
+    //Variaveis
+    variable
   }
   stages {
     stage('Checkout') { 
       steps {
           // Stage de clone do projeto
+          checkout
       }
     }  
     stage('TestUnit') { 
       steps {
         // Stage para executar test unit 
+        testunit
       }
     }
 
     stage('Analysis Sec') { 
       steps {
         // Stage para analise de segurança do código 
+        secutiry
       }
     }
     stage('Analysis QA') { 
       steps {
         // Stage para analise de qualidade do código
+        qa
       }
     }
     stage('Build') { 
       steps {
         // Build do código
+        build
       }
     }
     stage('Publish') { 
       steps {
         // Publicar o build em repositório 
+        publish
       }
     }
   }
@@ -127,7 +138,7 @@ Escolher 'Carregar implicitamente' significa que você não precisa usar a tag @
 
 A opção "Permitir que a versão padrão seja sobrescrita" é útil - permite especificar uma ramificação (ou identificador ou outro identificador) diferente dos padrões para que você possa experimentar as alterações em um único local antes de pressioná-los em tudo, o que é importante quando Qualquer alteração feita na biblioteca tem a chance de afetar todos os canais que a usam.
 
-### Criando a repo Shared
+### Multi-Tecnologia
 
 
 
