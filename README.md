@@ -160,6 +160,17 @@ Na opção *'Default version'* define a branch padrão que vai ser utilizado as 
 
 A opção *'Allow default version to be overridden'* é útil, permite especificar uma branch `library "my-shared-library@$BRANCH_NAME"` (ou tag ou outro identificador) diferente dos padrões para que você possa experimentar as alterações em um único local antes de colocar em produção, o que é importante quando qualquer alteração feita na biblioteca tem a chance de afetar todos que a usam.
 
+## Estrutura da Library
+
+O repositório do `shared library` segue o seguinte estrutura:
+
+- **/src/[io|org|com|other tld]/companyname/**: Local para as classes/métodos em `java` e os arquivos devem ter a extensão `.groovy`.
+- **/vars**: - Aqui ficam as variáveis globais e funções. Em nosso exemplo de `jenkinsfile` declarativo vamos colocar nossas funções nesse diretório.
+
+* **/resources/**: São para seus arquivos `não-Groovy`, tais como `txt`,`json` ou qualquer outro.
+
+
+
 
 ## Multi-Tecnologia
 
