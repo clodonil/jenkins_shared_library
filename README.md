@@ -76,9 +76,10 @@ Vamos escrever a [pipeline](https://github.com/clodonil/jenkins_shared_library/b
 
 Em cada stage foi criado as seguintes chamadas [`variable`,`checkout`,`testunit`, `security`, `qa`,  `build`, `publish`] que serão funções importadas de um branch do git.
 
-Crie no jenkins um projeto (`job`) do tipo pipeline e utilize o código abaixo.
+Crie no jenkins um projeto (`job`) do tipo pipeline e utilize o código abaixo como template.
 
 ```python
+@Library('shared')_
 pipeline {
   agent any
   environment {
@@ -132,6 +133,8 @@ Antes de começar a escrever as funções da pipeline é necessário criar um am
 
 Estamos falando em escrever código, portanto vamos utilizar o `gitlab` para realizar o controle do código. E vamos criar as branch de desenvolvimento e a branch de produção. Primeiramente o código é desenvolvido na branch de desenvolvimento e após os testes, realizamos um `Merge Request` para a branch de produção.
 
+> Qualquer um que tem acesso ao repositório pode enviar o código para ser executado no seu Jenkins, um repositório privado é o melhor solução.
+
 Dessa forma matemos os ambientes controlados e a evolução da esteira de Jenkins é feita como qualquer outro código.
 
 ![branch](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/branch.png)
@@ -141,16 +144,23 @@ Portanto crie no `gitlab` um repositório (criei com o nome shared) e as duas br
 
 ## Shared Library
 
-Primeira ordem de trabalhos: criar um repositório jenkins-shared-library (como muitos, eu uso o Github, mas qualquer que seja o SCM que você esteja usando para o Jenkins, tudo bem). Ele não precisa ser chamado assim, e não precisa ter nada nele ainda, mas você precisará adicionar esse repositório ao Jenkins, em Gerenciar bibliotecas globais de pipeline do Jenkins »Configure System» 
+Com o repositório criado, precisamos adicionar esse repositório ao Jenkins, em Gerenciar bibliotecas globais de pipeline do Jenkins »Configure System». Você precisará de acesso administrativo a Jenkins. Como há um possível risco de segurança. 
 
 ![jenkins](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/jenkins-shared.png)
 
+A escolha da opção 'Load implicitl' significa que você não precisa usar a tag `@Library` em seus pipelines para acessar sua biblioteca, mas também significa que sua biblioteca será carregada em cada pipeline, quer você queira ou não. Portanto deixamos essa opção para desabilitada, e explicitamente declaramos nas pipelines, conforme abaixo.
 
-Primeira ordem de trabalhos: criar um repositório jenkins-shared-library (como muitos, eu uso o Github, mas qualquer que seja o SCM que você esteja usando para o Jenkins, tudo bem). Ele não precisa ser chamado assim, e não precisa ter nada nele ainda, mas você precisará adicionar esse repositório ao Jenkins, em Gerenciar bibliotecas globais de pipeline do Jenkins »Configure System» . Você precisará de acesso administrativo a Jenkins ou terá que levar as pessoas a bordo. Como há um possível risco de segurança (qualquer um que possa se comprometer com esse repositório pode enviar o código para ser executado no seu Jenkins), um repositório privado é o melhor.
+```
+@Library('shared')_
+```
 
-Escolher 'Carregar implicitamente' significa que você não precisa usar a tag @Library em seus pipelines para acessar sua biblioteca, mas também significa que sua biblioteca será carregada em cada pipeline, quer você queira ou não (você pode ver o SCM checkout e last commit de sua biblioteca compartilhada para o início de seu pipeline).
+Perceba `_` no final da declaração.
 
-A opção "Permitir que a versão padrão seja sobrescrita" é útil - permite especificar uma ramificação (ou identificador ou outro identificador) diferente dos padrões para que você possa experimentar as alterações em um único local antes de pressioná-los em tudo, o que é importante quando Qualquer alteração feita na biblioteca tem a chance de afetar todos os canais que a usam.
+Na opção 'Default version' define a branch padrão que vai ser utilizado as bibliotecas. Nesse caso estamos utilizando a branch `production`. 
+
+A opção 'Allow default version to be overridden' é útil, permite especificar uma branch `library "my-shared-library@$BRANCH_NAME"` (ou tag ou outro identificador) diferente dos padrões para que você possa experimentar as alterações em um único local antes de colocar em produção, o que é importante quando qualquer alteração feita na biblioteca tem a chance de afetar todos que a usam.
+
+
 
 ### Multi-Tecnologia
 
