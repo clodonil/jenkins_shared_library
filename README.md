@@ -257,6 +257,14 @@ def executePipeline() {
 }
 return this
 ```
-http://www.aimtheory.com/jenkins/pipeline/continuous-delivery/2017/12/02/jenkins-pipeline-global-shared-library-best-practices.html
+
+Referências:
+
+- [aimtheory](http://www.aimtheory.com/jenkins/pipeline/continuous-delivery/2017/12/02/)
+- [shared-library](jenkins-pipeline-global-shared-library-best-practices.html)
+- [Ippon](https://blog.ippon.tech/setting-up-a-shared-library-and-seed-job-in-jenkins-part-2/)
+- [automatingguy](https://automatingguy.com/2017/12/29/jenkins-pipelines-shared-libraries/)
+- [medium](https://medium.com/devopslinks/a-hacky-hackers-guide-to-jenkins-scripted-pipelines-part-4-dd49fcb0d62)
+- [Jenkins](https://jenkins.io/doc/book/pipeline/shared-libraries/)
 
 https://github.com/fabric8io/fabric8-pipeline-library
