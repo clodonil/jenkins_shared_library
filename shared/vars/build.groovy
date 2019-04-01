@@ -1,7 +1,8 @@
 #!/usr/bin/env groovy 
 
 
-def call(String name = 'human'){
-
-   echo "Hello, ${name}."
+def call(){
+   // Passos para compilar o projeto
+   echo "Build."
+   sh "${mvnHome}/bin/mvn compile 
 }

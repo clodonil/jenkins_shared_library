@@ -2,41 +2,45 @@
 pipeline {
   agent any
   environment {
-      branch = 'master'
-      scmUrl = 'ssh://git@myScmServer.com/repos/myRepo.git'
-      serverPort = '8080'
-      developmentServer = 'dev-myproject.mycompany.com'
-      stagingServer = 'staging-myproject.mycompany.com'
-      productionServer = 'production-myproject.mycompany.com'
+    //Variaveis
+    variable
   }
- 
   stages {
     stage('Checkout') { 
       steps {
-          git url: 'http://gitlab/root/appdemo.git'
-
-            sh "ls -lat"
-           
+          // Stage de clone do projeto
+          checkout
       }
     }  
+    stage('TestUnit') { 
+      steps {
+        // Stage para executar test unit 
+        testunit
+      }
+    }
+
+    stage('Analysis Sec') { 
+      steps {
+        // Stage para analise de segurança do código 
+        security
+      }
+    }
+    stage('Analysis QA') { 
+      steps {
+        // Stage para analise de qualidade do código
+        qa
+      }
+    }
     stage('Build') { 
       steps {
-        sh 'echo oi'
+        // Build do código
+        build
       }
     }
-    stage('FindBug') { 
+    stage('Publish') { 
       steps {
-        sh 'ls'
-      }
-    }
-    stage('SonarQube') { 
-      steps {
-        sh 'echo ola sonar' 
-      }
-    }
-    stage('Deploy') { 
-      steps {
-        sh 'echo deploy' 
+        // Publicar o build em repositório 
+        publish
       }
     }
   }
