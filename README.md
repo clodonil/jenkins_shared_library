@@ -211,7 +211,7 @@ new stdPipeline().execute()
 ```java
 // /src/org/demo/stdPipeline.groovy
 #!/bin/groovy
-package org.acme;
+package org.demo;
 
 def execute() {
   node {
