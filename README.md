@@ -233,6 +233,30 @@ def execute() {
 }
 ```
 
+```java
+// /src/org/demo/pythonPipeline.groovy
+#!/usr/bin/groovy
+package org.acme;
+
+pythonPipeline(pipelineDefinition) {
+  pd = pipelineDefinition
+}
+def executePipeline() {
+  node {
+    if (runTests) {
+      stage('Run Tests') {
+        sh pd.testCommand
+      }
+    }
+    if (deployUponTestSuccess) {
+      stage('Deploy') {
+        sh "script.sh ${pd.deploymentEnvironment}"
+      }
+    }
+  }
+}
+return this
+```
 http://www.aimtheory.com/jenkins/pipeline/continuous-delivery/2017/12/02/jenkins-pipeline-global-shared-library-best-practices.html
 
 https://github.com/fabric8io/fabric8-pipeline-library
