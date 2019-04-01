@@ -185,7 +185,19 @@ As bibliotecas como exemplos são esses:
 
 ## Multi-Tecnologia
 
+A abordagem até aqui seguiu o modelo tradicional de pipeline, porém nem sempre essa é a melhor. Agora vamos seguir uma nova abordagem, removendo todos os scripts do `Jenkinsfile` para que todos os pipelines do Jenkins estejam em conformidade com um processo específico, que será definido no código-fonte da biblioteca compartilhada global.
 
+Por exemplo, se você estiver continuamente testando e entregando aplicativos `Java` e aplicativos `Python`, desejaria ter um “pipeline Java” padrão e um “pipeline Python” padrão com etapas semelhantes. 
+
+No entanto, você pode dar ao desenvolvedor a capacidade de informar que o pipeline deve se comportar de maneira diferente por meio de entradas no `Jenkinsfile`.
+
+Como por exemplo adicionando o seguinte código no seu repositório.
+
+```yaml
+pipelinetype: python
+runTests: true
+testCommand: "pytest test.py"
+```
 
 
 http://www.aimtheory.com/jenkins/pipeline/continuous-delivery/2017/12/02/jenkins-pipeline-global-shared-library-best-practices.html
