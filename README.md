@@ -148,7 +148,7 @@ Com o repositório criado, precisamos adicionar esse repositório ao Jenkins, em
 
 ![jenkins](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/jenkins-shared.png)
 
-A escolha da opção 'Load implicitl' significa que você não precisa usar a tag `@Library` em seus pipelines para acessar sua biblioteca, mas também significa que sua biblioteca será carregada em cada pipeline, quer você queira ou não. Portanto deixamos essa opção para desabilitada, e explicitamente declaramos nas pipelines, conforme abaixo.
+A escolha da opção *'Load implicitl'* significa que você não precisa usar a tag `@Library` em seus pipelines para acessar sua biblioteca, mas também significa que sua biblioteca será carregada em cada pipeline, quer você queira ou não. Portanto deixamos essa opção para desabilitada, e explicitamente declaramos nas pipelines, conforme abaixo.
 
 ```
 @Library('shared')_
@@ -156,13 +156,12 @@ A escolha da opção 'Load implicitl' significa que você não precisa usar a ta
 
 Perceba `_` no final da declaração.
 
-Na opção 'Default version' define a branch padrão que vai ser utilizado as bibliotecas. Nesse caso estamos utilizando a branch `production`. 
+Na opção *'Default version'* define a branch padrão que vai ser utilizado as bibliotecas. Nesse caso estamos utilizando a branch `production`. 
 
-A opção 'Allow default version to be overridden' é útil, permite especificar uma branch `library "my-shared-library@$BRANCH_NAME"` (ou tag ou outro identificador) diferente dos padrões para que você possa experimentar as alterações em um único local antes de colocar em produção, o que é importante quando qualquer alteração feita na biblioteca tem a chance de afetar todos que a usam.
+A opção *'Allow default version to be overridden'* é útil, permite especificar uma branch `library "my-shared-library@$BRANCH_NAME"` (ou tag ou outro identificador) diferente dos padrões para que você possa experimentar as alterações em um único local antes de colocar em produção, o que é importante quando qualquer alteração feita na biblioteca tem a chance de afetar todos que a usam.
 
 
-
-### Multi-Tecnologia
+## Multi-Tecnologia
 
 
 
