@@ -169,7 +169,18 @@ O repositório do `shared library` segue o seguinte estrutura:
 
 * **/resources/**: São para seus arquivos `não-Groovy`, tais como `txt`,`json` ou qualquer outro.
 
+As bibliotecas como exemplos são esses:
 
+- [shared/vars/variable.groovy](https://github.com/clodonil/jenkins_shared_library/blob/master/shared/vars/variable.groovy)
+- [shared/vars/checkout.groovy](https://github.com/clodonil/jenkins_shared_library/blob/master/shared/vars/checkout.groovy)
+- [shared/vars/testunit.groovy](https://github.com/clodonil/jenkins_shared_library/blob/master/shared/vars/testunit.groovy)
+- [shared/vars/security.groovy](https://github.com/clodonil/jenkins_shared_library/blob/master/shared/vars/security.groovy)
+- [shared/vars/qa.groovy](https://github.com/clodonil/jenkins_shared_library/blob/master/shared/vars/qa.groovy)
+- [shared/vars/build.groovy](https://github.com/clodonil/jenkins_shared_library/blob/master/shared/vars/build.groovy)
+- [shared/vars/publish.groovy](https://github.com/clodonil/jenkins_shared_library/blob/master/shared/vars/publish.groovy)
+
+
+![jenkinsExec](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/jenkins-exec.png)
 
 
 ## Multi-Tecnologia
