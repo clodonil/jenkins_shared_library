@@ -266,5 +266,4 @@ Referências:
 - [automatingguy](https://automatingguy.com/2017/12/29/jenkins-pipelines-shared-libraries/)
 - [medium](https://medium.com/devopslinks/a-hacky-hackers-guide-to-jenkins-scripted-pipelines-part-4-dd49fcb0d62)
 - [Jenkins](https://jenkins.io/doc/book/pipeline/shared-libraries/)
-
-https://github.com/fabric8io/fabric8-pipeline-library
+- [Fabric8](https://github.com/fabric8io/fabric8-pipeline-library)
