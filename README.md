@@ -185,7 +185,7 @@ As bibliotecas como exemplos são esses:
 
 ## Multi-Tecnologia
 
-A abordagem até aqui seguiu o modelo tradicional de pipeline, porém nem sempre essa é a melhor escolha. Agora vamos seguir uma nova abordagem, removendo todos os scripts do `Jenkinsfile` para que todos os pipelines do Jenkins estejam em conformidade com um processo específico, que será definido no código-fonte da biblioteca compartilhada global.
+A abordagem até aqui seguiu o modelo tradicional de pipeline, porém nem sempre essa é a melhor escolha. Agora vamos seguir uma nova abordagem, removendo todos os scripts do `Jenkinsfile` para que todos os pipelines do Jenkins estejam em conformidade com um processo específico, que será definido no código-fonte da biblioteca compartilhada.
 
 Por exemplo, se você estiver continuamente testando e entregando aplicativos `Java` e aplicativos `Python`, desejaria ter um “pipeline Java” padrão e um “pipeline Python” padrão com etapas semelhantes.
 
@@ -199,7 +199,7 @@ runTests: true
 testCommand: "pytest test.py"
 ```
 
-O arquivo de `Jenkinsfile` deve ser o mais simples possível, e único para todas as tecnologias.
+O arquivo de `Jenkinsfile` deve ser o mais simples possível, e único para todas as tecnologias, e tudo que deve ter é uma chamada para o método `stdPipeline`.
 
 ```java
 #!/bin/groovy
@@ -207,6 +207,8 @@ O arquivo de `Jenkinsfile` deve ser o mais simples possível, e único para toda
 import org.demo.*
 new stdPipeline().execute()
 ```
+
+O método `stdPipeline` utiliza o arquivo `pipeline.yml` para definir a tecnologia que será chamada.
 
 ```java
 // /src/org/demo/stdPipeline.groovy
