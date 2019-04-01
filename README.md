@@ -215,23 +215,22 @@ package org.demo;
 
 def execute() {
   node {
-    stage('Initialize') {
+    stage('Inicializando') {
       checkout scm
-      echo 'Loading pipeline definition'
+      echo 'load file pipeline.yml'
       Yaml parser = new Yaml()
       Map pipelineDefinition = parser.load(new File(pwd() + '/pipeline.yml').text)
     }
     switch(pipelineDefinition.pipelineType) {
       case 'python':
-        // Instantiate and execute a Python pipeline
         new pythonPipeline(pipelineDefinition).executePipeline()
-      case 'nodejs':
-        // Instantiate and execute a NodeJS pipeline
-        new nodeJSPipeline(pipelineDefinition).executePipeline()
+      case 'java':
+        new javaPipeline(pipelineDefinition).executePipeline()
     }
   }
 }
 ```
+
 http://www.aimtheory.com/jenkins/pipeline/continuous-delivery/2017/12/02/jenkins-pipeline-global-shared-library-best-practices.html
 
 https://github.com/fabric8io/fabric8-pipeline-library
