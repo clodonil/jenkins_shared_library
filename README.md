@@ -10,9 +10,15 @@ Então, para evitar isso, você armazena seus "código de stage" em uma bibliote
 
 Dessa forma, melhorias aplicadas em um `stage` são automaticamente replicadas para todos os pipelines que tem esse `stage` referenciado.
 
-Nesse tutorial vamos estudar sobre o `shared library` na prática e para isso vamos precisar de uma infra-estrutura com `jenkins` e `gitlab`. Também vamos precisar de um AppDemo para usar na nossa pipeline e por último vamos criar a nossa pipeline com `shared library`.
+Nesse tutorial vamos estudar sobre o `shared library` na prática e para isso vamos precisar de uma infra-estrutura com `jenkins` e `gitlab`. Também vamos precisar de um AppDemo para usar na nossa pipeline.
 
-## Infra-estrutura necessária
+O tutorial foi estruturado da seguinte forma:
+
+1. Provisionar um infra-estrutura básica para o `Hands-On`;
+2. Criar uma pipeline com um template predefinido, mais os stages como `shared library`; e
+3. Criar uma pipeline standard, tendo todas as definições no `shared library`. Permitindo uma escalabilidade muito maior que a pipeline tradicional.
+
+## Infra-estrutura
 
 Vamos começar esse tutorial de `Jenkins Shared Library` construindo a infra necessária. Para isso vamos utilizar imagens docker e o [`docker-compose`](https://docs.docker.com/compose/install/) para orquestrar os containers.
 
@@ -22,13 +28,13 @@ Para começar faça o clone do projeto do git.
 ```bash
 $ git clone https://github.com/clodonil/jenkins_shared_library.git
 ```
-No diretório do projeto, suba os container utilizar o [`docker-compose`](https://docs.docker.com/compose/install/).
+No diretório do projeto, inicie os container utilizar o [`docker-compose`](https://docs.docker.com/compose/install/).
 
 ```bash
 $ docker-compose up
 ```
 
-## Configuração do Jenkins e Gitlab
+### Configuração do Jenkins e Gitlab
 
 Como as imagens em execução, podemos acessar o `jenkins` pela url `http://localhost:8080` e o `gitab` pela url `http://localhost`.
 
@@ -61,7 +67,7 @@ Agora temos o `jenkins` e o `gitlab` configurado corretamente.
 
 ## Template de Pipeline 
 
-Vamos utilizar como base a pipeline abaixo. Ela tem 5 stages.
+Vamos utilizar como base a pipeline abaixo. Ela têm 5 stages.
 
 - **Checkout**: Realiza o clone do código fonte;
 - **TestUnit**: Roda o teste unitário;
@@ -74,7 +80,7 @@ Vamos escrever a [pipeline](https://github.com/clodonil/jenkins_shared_library/b
 
 > Conheça mais sobre [Groovy](http://groovy-lang.org/learn.html)
 
-Em cada stage foi criado as seguintes chamadas [`variable`,`checkout`,`testunit`, `security`, `qa`,  `build`, `publish`] que serão funções importadas de um branch do git.
+Em cada stage foi criado as seguintes chamadas `variable`,`checkout`,`testunit`, `security`, `qa`,  `build`e `publish`. Essa chamadas são funções importadas de um branch do git.
 
 Crie no jenkins um projeto (`job`) do tipo pipeline e utilize o código abaixo como template.
 
@@ -131,11 +137,11 @@ pipeline {
 
 Antes de começar a escrever as funções da pipeline é necessário criar um ambiente para o desenvolvimento, teste e validação antes de colocar em produção.
 
-Estamos falando em escrever código, portanto vamos utilizar o `gitlab` para realizar o controle do código. E vamos criar as branch de desenvolvimento e a branch de produção. Primeiramente o código é desenvolvido na branch de desenvolvimento e após os testes, realizamos um `Merge Request` para a branch de produção.
+Estamos falando em escrever código, portanto vamos utilizar o `gitlab` para realizar o controle do código. Como exemplo, criaremos as branch de desenvolvimento e a branch de produção. Primeiramente o código é desenvolvido na branch de desenvolvimento e após os testes, realizamos um `Merge Request` para a branch de produção.
 
 > Qualquer um que tem acesso ao repositório pode enviar o código para ser executado no seu Jenkins, um repositório privado é o melhor solução.
 
-Dessa forma matemos os ambientes controlados e a evolução da esteira de Jenkins é feita como qualquer outro código.
+Dessa forma matemos os ambientes controlados e a evolução da pipeline de Jenkins é feita como qualquer outro código.
 
 ![branch](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/branch.png)
 
@@ -144,11 +150,13 @@ Portanto crie no `gitlab` um repositório (criei com o nome shared) e as duas br
 
 ## Shared Library
 
-Com o repositório criado, precisamos adicionar esse repositório ao Jenkins, em Gerenciar bibliotecas globais de pipeline do Jenkins »Configure System». Você precisará de acesso administrativo a Jenkins. Como há um possível risco de segurança. 
+Com o repositório criado, precisamos adicionar esse repositório ao Jenkins em Gerenciar bibliotecas globais de pipeline do Jenkins,Configure System. Você precisará de acesso administrativo a Jenkins. Como há um possível risco de segurança. 
+
+> `Manage Jenkins » Configure System » Global Pipeline Libraries`
 
 ![jenkins](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/jenkins-shared.png)
 
-A escolha da opção *'Load implicitl'* significa que você não precisa usar a tag `@Library` em seus pipelines para acessar sua biblioteca, mas também significa que sua biblioteca será carregada em cada pipeline, quer você queira ou não. Portanto deixamos essa opção para desabilitada, e explicitamente declaramos nas pipelines, conforme abaixo.
+A escolha da opção *'Load implicitl'* significa que você não precisa usar a tag `@Library` em seus pipelines para acessar sua biblioteca, mas também significa que sua biblioteca será carregada em cada pipeline, quer você queira ou não. Portanto deixamos essa opção desabilitada, e explicitamente declaramos nas pipelines, conforme abaixo.
 
 ```
 @Library('shared')_
@@ -183,11 +191,13 @@ As bibliotecas como exemplos são esses:
 ![jenkinsExec](https://github.com/clodonil/jenkins_shared_library/blob/master/imgs/jenkins-exec.png)
 
 
-## Multi-Tecnologia
+## Multi-Tecnologia (Pipeline Standard)
 
 A abordagem até aqui seguiu o modelo tradicional de pipeline, porém nem sempre essa é a melhor escolha. Agora vamos seguir uma nova abordagem, removendo todos os scripts do `Jenkinsfile` para que todos os pipelines do Jenkins estejam em conformidade com um processo específico, que será definido no código-fonte da biblioteca compartilhada.
 
-Por exemplo, se você estiver continuamente testando e entregando aplicativos `Java` e aplicativos `Python`, desejaria ter um “pipeline Java” padrão e um “pipeline Python” padrão com etapas semelhantes.
+Por exemplo, se você estiver continuamente testando e entregando aplicativos `Java` e aplicativos `Python`, desejaria ter um "pipeline Java" padrão e um "pipeline Python" padrão com etapas semelhantes.
+
+> O Fluxo de entrada de novas tecnologias é conhecida e o desenvolvimento é simples e estruturado.
 
 No entanto, você pode dar ao desenvolvedor a capacidade de informar que o pipeline deve se comportar de maneira diferente por meio de entradas no `Jenkinsfile`.
 
@@ -195,11 +205,12 @@ Como por exemplo adicionando o seguinte código no seu repositório.
 
 ```yaml
 pipelinetype: python
-runTests: true
 testCommand: "pytest test.py"
 ```
 
 O arquivo de `Jenkinsfile` deve ser o mais simples possível, e único para todas as tecnologias, e tudo que deve ter é uma chamada para o método `stdPipeline`.
+
+Todos os códigos desse módulo estão no diretório [`std-shared`](https://github.com/clodonil/jenkins_shared_library/blob/master/std-shared)
 
 ```java
 #!/bin/groovy
@@ -208,7 +219,7 @@ import org.demo.*
 new stdPipeline().execute()
 ```
 
-O método `stdPipeline` utiliza o arquivo `pipeline.yml` para definir a tecnologia que será chamada.
+O método `stdPipeline` utiliza o arquivo `pipeline.yml` para definir a tecnologia que será chamada. E a lib `stdPipeline().execute()` é versionado no git.
 
 ```java
 // /src/org/demo/stdPipeline.groovy
@@ -232,28 +243,38 @@ def execute() {
   }
 }
 ```
+Em caso de novas tecnologias, basta adicionar uma nova entrada no `stdPipeline.groovy` e validar no Jenkins de desenvolvimento.
 
 ```java
-// /src/org/demo/pythonPipeline.groovy
+// /src/org/demo/javaPipeline.groovy
 #!/usr/bin/groovy
 package org.acme;
 
-pythonPipeline(pipelineDefinition) {
+javaPipeline(pipelineDefinition) {
   pd = pipelineDefinition
 }
 def executePipeline() {
   node {
-    if (runTests) {
       stage('Run Tests') {
         sh pd.testCommand
       }
-    }
-    if (deployUponTestSuccess) {
-      stage('Deploy') {
-        sh "script.sh ${pd.deploymentEnvironment}"
+      stage('Analysis Sec') { 
+        // Stage para analise de segurança do código 
+        security
       }
-    }
-  }
+      stage('Analysis QA') { 
+        // Stage para analise de qualidade do código
+        qa
+      }
+      stage('Build') { 
+        // Build do código
+        java/build
+      }
+      stage('Publish') { 
+        // Publicar o build em repositório 
+        java/publish
+      }
+   }
 }
 return this
 ```
