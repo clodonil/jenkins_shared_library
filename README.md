@@ -216,6 +216,7 @@ buildspec:
       - make test
       - make run
 ```
+Nesse exemplo, temos um `build` customizado, definido pela entrada `buildcustom: true`. Para `build` padrão, pode ser usado o `buildcustom: false`.  
 
 O arquivo de `Jenkinsfile` deve ser o mais simples possível, e único para todas as tecnologias, e tudo que deve ter é uma chamada para o método `stdPipeline`.
 
@@ -254,7 +255,7 @@ def execute() {
 ```
 Em caso de novas tecnologias, basta adicionar uma nova entrada no `stdPipeline.groovy` e validar no Jenkins de desenvolvimento.
 
-```java
+```python
 // /src/org/demo/pythonPipeline.groovy
 #!/usr/bin/groovy
 package org.acme;
@@ -287,7 +288,7 @@ def executePipeline() {
       }
       stage('Publish') { 
         // Publicar o build em repositório 
-        java/publish
+        python/publish
       }
    }
 }
