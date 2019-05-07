@@ -205,7 +205,16 @@ Como por exemplo adicionando o seguinte código no seu repositório.
 
 ```yaml
 pipelinetype: python
-testCommand: "pytest test.py"
+testCommand: python -m unittest tests/app_test.py 
+buildcustom: true
+buildspec:
+      - pip install -r requirements
+      - make clean
+      - make clean-build 
+      - make isort
+      - make lint
+      - make test
+      - make run
 ```
 
 O arquivo de `Jenkinsfile` deve ser o mais simples possível, e único para todas as tecnologias, e tudo que deve ter é uma chamada para o método `stdPipeline`.
@@ -246,11 +255,11 @@ def execute() {
 Em caso de novas tecnologias, basta adicionar uma nova entrada no `stdPipeline.groovy` e validar no Jenkins de desenvolvimento.
 
 ```java
-// /src/org/demo/javaPipeline.groovy
+// /src/org/demo/pythonPipeline.groovy
 #!/usr/bin/groovy
 package org.acme;
 
-javaPipeline(pipelineDefinition) {
+pythonPipeline(pipelineDefinition) {
   pd = pipelineDefinition
 }
 def executePipeline() {
@@ -268,7 +277,13 @@ def executePipeline() {
       }
       stage('Build') { 
         // Build do código
-        java/build
+        if (pd.buildcustom == true){
+           for (String command:  pd.buildspec){
+                sh command
+           }
+        }else{
+           python/build
+        }
       }
       stage('Publish') { 
         // Publicar o build em repositório 

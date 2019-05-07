@@ -1,0 +1,13 @@
+pipelineType: python
+testCommand: python -m unittest tests/app_test.py 
+buildcustom: true
+buildspec:
+      - pip install -r requirements
+      - make clean
+      - make clean-build 
+      - make isort
+      - make lint
+      - make test
+      - make run
+
+     

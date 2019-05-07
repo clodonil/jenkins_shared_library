@@ -1,0 +1,4 @@
+#!/bin/groovy
+@Library('std-shared') _
+import org.demo.*
+new stdPipeline().execute()
